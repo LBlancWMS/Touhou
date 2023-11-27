@@ -15,9 +15,9 @@ public class character : MonoBehaviour
     private Vector2 shootAxis;
     private float currentShootEnergy = 0f;
     private float maxShootEnergy = 100f;
-    private float energyShootCooldown = 0.15f;
+    private float energyShootCooldown = 0.02f;
     private bool godMode = false;
-    private bool infinyAmmo = false;
+    private bool infinyAmmo = true;
     private bool isShooting = false;
     private int weaponLevel = 1;
     private float ammoRefillCooldown = 0.03f;
@@ -70,12 +70,9 @@ public void stopMove()
     isMoving = false;
 }
 
-void OnTriggerEnter2D(Collider2D col)
+    void OnParticleCollision()
     {
-        if(col.gameObject != this.gameObject)
-        {
             takeDMG(1);
-        }
     }
 
     private void takeDMG(int damageAmout)

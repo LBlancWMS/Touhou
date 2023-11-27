@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\boostSpawner.cs" />
     <Compile Include="Assets\Scripts\playerController.cs" />
     <Compile Include="Assets\Scripts\Boid.cs" />
+    <Compile Include="Assets\boidCollision.cs" />
     <Compile Include="Assets\Scripts\FlockingProjectile.cs" />
     <Compile Include="Assets\Scripts\boidComportement.cs" />
     <Compile Include="Assets\Scripts\energyProjectileManager.cs" />
