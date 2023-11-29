@@ -8,6 +8,8 @@ TagManager:
   - boidUnfriendly
   - player
   - playerProjectile
+  - obstacleMask
+  - ennemiesSpawner
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - playerProjectile
   - ennemiesSpawner
   - particles
-  - 
+  - 12
   - 
   - 
   - 
@@ -44,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FirstPlan
+    uniqueID: 2678426767
     locked: 0

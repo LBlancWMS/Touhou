@@ -16,7 +16,7 @@ public class boostSpawner : MonoBehaviour
 
     IEnumerator spawnBoostCoroutine()
     {
-        while (0 == 0)
+        while (true)
         {
             spawnBoost();
             yield return new WaitForSeconds(Random.Range(3f, 35f));

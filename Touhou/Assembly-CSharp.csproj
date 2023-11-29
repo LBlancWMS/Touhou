@@ -55,22 +55,32 @@
     <Analyzer Include="D:\Logiciels\Unity\Unity\2022.3.12f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Provisoire\boidComportement.cs" />
     <Compile Include="Assets\UI\UI_inGame_Manager.cs" />
-    <Compile Include="Assets\Scripts\boidTest.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\boidT.cs" />
+    <Compile Include="Assets\Scripts\rotatingMovement.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\InfiniteBackground.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\Boid.cs" />
     <Compile Include="Assets\Scripts\boostSpawner.cs" />
     <Compile Include="Assets\Scripts\playerController.cs" />
-    <Compile Include="Assets\Scripts\Boid.cs" />
-    <Compile Include="Assets\boidCollision.cs" />
-    <Compile Include="Assets\Scripts\FlockingProjectile.cs" />
-    <Compile Include="Assets\Scripts\boidComportement.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\boidSpawner.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\FlockingProjectile.cs" />
+    <Compile Include="Assets\Scripts\nonPlayableCharacter.cs" />
+    <Compile Include="Assets\gameLoop.cs" />
+    <Compile Include="Assets\UnderwaterFantasy\Scripts\Done_BGScroller.cs" />
+    <Compile Include="Assets\Scripts\randomDirection.cs" />
     <Compile Include="Assets\Scripts\energyProjectileManager.cs" />
-    <Compile Include="Assets\Scripts\boidSpawner.cs" />
-    <Compile Include="Assets\Scripts\spawnerT.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\spawnerT.cs" />
+    <Compile Include="Assets\UnderwaterFantasy\Scripts\Perspective2DSortMode.cs" />
     <Compile Include="Assets\Scripts\character.cs" />
+    <Compile Include="Assets\Scripts\ennemiesSpawnerScript.cs" />
     <Compile Include="Assets\Scripts\boostPolymorph.cs" />
-    <Compile Include="Assets\Scripts\InfiniteBackground.cs" />
     <Compile Include="Assets\Scripts\scenesManager.cs" />
-    <Compile Include="Assets\Scripts\boidT.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\boidTest.cs" />
+    <Compile Include="Assets\Scripts\Provisoire\boidCollision.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Spnning Orb\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -13,17 +13,22 @@ public class character : MonoBehaviour
     private Vector2 directionn;
     private bool isMoving = false;
     private Vector2 shootAxis;
+    private float shootEnergyCost = 0.1f;
     private float currentShootEnergy = 0f;
     private float maxShootEnergy = 100f;
-    private float energyShootCooldown = 0.02f;
+    private float energyShootCooldown = 0.005f;
     private bool godMode = false;
-    private bool infinyAmmo = true;
+    private bool infinyAmmo = false;
     private bool isShooting = false;
     private int weaponLevel = 1;
-    private float ammoRefillCooldown = 0.03f;
+    private Camera cam;
+    private float screenWidth;
+    private float screenHeight;
+    private float ammoRefillCooldown = 0.001f;
     [SerializeField] private GameObject projectileSpawnPoint1;
-    [SerializeField] private GameObject projectileSpawnPoint2;
+   // [SerializeField] private GameObject projectileSpawnPoint2;
     private Rigidbody2D rb;
+
     private float deltaTime = 0.0f;
     void Awake()
     {
@@ -32,6 +37,9 @@ public class character : MonoBehaviour
        //currentShootEnergy = maxShootEnergy;
         ui_InGame = GameObject.Find("UI_inGame").GetComponent<UI_inGame_Manager>();
         StartCoroutine("ammoRefill");
+        cam = Camera.main;
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
     }
 
 
@@ -57,7 +65,25 @@ void Update()
        // }
        // transform.Translate(directionn * speed * Time.fixedDeltaTime);
     }
-}
+
+
+
+  Vector3 playerScreenPoint = cam.WorldToScreenPoint(transform.position);
+
+        // if (playerScreenPoint.x < 0) 
+        //     screenLimitTeleportation(new Vector3(screenWidth, playerScreenPoint.y, playerScreenPoint.z));
+        // else if (playerScreenPoint.x > screenWidth) 
+        //     screenLimitTeleportation(new Vector3(0, playerScreenPoint.y, playerScreenPoint.z));
+        if (playerScreenPoint.y < 0) 
+            screenLimitTeleportation(new Vector3(playerScreenPoint.x, screenHeight, playerScreenPoint.z));
+        else if (playerScreenPoint.y > screenHeight) 
+            screenLimitTeleportation(new Vector3(playerScreenPoint.x, 0, playerScreenPoint.z));
+    }
+
+    private void screenLimitTeleportation(Vector3 newPosition)
+    {
+        transform.position = cam.ScreenToWorldPoint(newPosition);
+    }
 
 public void startMove(Vector2 axis)
 {
@@ -96,7 +122,9 @@ public void stopMove()
     shootAxis = axis.normalized;
     Vector2 shootDirection = axis.normalized;
     float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
-    transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle - 90f));
+    transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+
+
 
     if (!isShooting)
     {
@@ -115,16 +143,18 @@ public void stopMove()
     private void shoot()
     {
         StopCoroutine("ammoRefill");
+        
         if(infinyAmmo == false)
         {
-        currentShootEnergy --;
+        currentShootEnergy -= shootEnergyCost;
         }
+
         ui_InGame.setEnergyValue(currentShootEnergy);
-        energyProjectileManager energyProjectile = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint1.transform.position.x, projectileSpawnPoint1.transform.position.y), Quaternion.identity);
+        energyProjectileManager energyProjectile = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint1.transform.position.x, projectileSpawnPoint1.transform.position.y), transform.rotation);
         energyProjectile.onSpawn(shootAxis);
 
-        energyProjectileManager energyProjectile2 = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint2.transform.position.x, projectileSpawnPoint2.transform.position.y), Quaternion.identity);
-        energyProjectile2.onSpawn(shootAxis);
+       // energyProjectileManager energyProjectile2 = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint2.transform.position.x, projectileSpawnPoint2.transform.position.y), transform.rotation);
+       // energyProjectile2.onSpawn(shootAxis);
     }
 
 
@@ -221,4 +251,8 @@ public void stopMove()
         ui_InGame.setHealthColor(false);
         StopCoroutine("godModeCoroutine");
     }
+
+
+
+    
 }

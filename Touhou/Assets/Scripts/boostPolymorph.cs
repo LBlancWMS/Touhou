@@ -38,9 +38,12 @@ public class boostPolymorph : MonoBehaviour
             break;                                                  
         }
     }
-void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.gameObject.tag == "player")
+        {
         applyBoost();
+        }
     }
 
     private void applyBoost()

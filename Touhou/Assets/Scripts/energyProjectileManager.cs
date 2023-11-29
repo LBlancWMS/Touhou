@@ -5,8 +5,6 @@ using UnityEngine;
 public class energyProjectileManager : MonoBehaviour
 {
     public Rigidbody2D rb;
-    private float lifeTimeStart;
-    private float lifeTime = 5f;
     void Start()
     {
         
@@ -14,22 +12,15 @@ public class energyProjectileManager : MonoBehaviour
 
     public void onSpawn(Vector2 directionVector)
     {
-        lifeTimeStart = Time.time;
         rb.AddForce(directionVector * 60f, ForceMode2D.Impulse);
     }
-
-    void Update()
-    {
-        if(Time.time >= lifeTimeStart + lifeTime)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    
         void OnCollisionEnter2D(Collision2D col)
     {
+        if(col.gameObject.tag == "obstacleMask" || col.gameObject.tag == "ennemiesSpawner")
+        {
         Destroy(this.gameObject);
+        }
+
     }
 
     void OnParticleCollision()
