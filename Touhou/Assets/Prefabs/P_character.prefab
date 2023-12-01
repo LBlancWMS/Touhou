@@ -117,6 +117,14 @@ MonoBehaviour:
   energyProjectilePrefab: {fileID: -3231516089620131920, guid: ca9ea13d5f52f1a42a03455330ff0d71, type: 3}
   speed: 75
   projectileSpawnPoint1: {fileID: 5916063618605119493}
+  UI_endGame: {fileID: 3353899281513493798, guid: 011e1ddb08732b34ca4187dfda5c21cc, type: 3}
+  soundClips:
+  - {fileID: 8300000, guid: cd1d7943a4c86c64f81a1eca467bef7d, type: 3}
+  - {fileID: 8300000, guid: 6098eedc1e0bb8d4995be4a109c8582f, type: 3}
+  - {fileID: 8300000, guid: 16d49e8b027055b40b0a0fd0d33dcfb7, type: 3}
+  - {fileID: 8300000, guid: f1691a6af124c5d4aa2f7fa2c4eca20b, type: 3}
+  - {fileID: 8300000, guid: 7230a88593bc61c469d0581002c09336, type: 3}
+  hitClip: {fileID: 8300000, guid: cf647a56aff541d4586acb48deb868ff, type: 3}
 --- !u!114 &8922093282774978454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +198,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 26b7817c-8d88-4ad6-ab75-32099286f971
     m_ActionName: shipControls/Shoot[/SwitchProControllerHID/rightStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7494285591053810445}
+        m_TargetAssemblyTypeName: character, Assembly-CSharp
+        m_MethodName: godModDEBUG
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 494cdc68-f51e-4d9e-b04c-ae1f53a1731b
+    m_ActionName: shipControls/Godmode[/SwitchProControllerHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Joystick
   m_DefaultActionMap: shipControls

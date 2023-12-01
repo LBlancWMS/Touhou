@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class scenesManager : MonoBehaviour
 {
-    void Awake()
+    public void playButtonPressed()
     {
-
-    }
-    void Start()
-    {
-        
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("level_1");
     }
 
+    public void quitButtonPressed()
+    {
+        Application.Quit();
+    }
 }

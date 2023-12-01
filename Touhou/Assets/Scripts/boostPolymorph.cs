@@ -6,7 +6,7 @@ public class boostPolymorph : MonoBehaviour
 {
     private character c;
     private string boostType = "heal";
-    [SerializeField] private List<Sprite> sprites;
+    [SerializeField] private Sprite orbSprite;
     private SpriteRenderer spriteRenderer;
     void Awake()
     {
@@ -17,25 +17,21 @@ public class boostPolymorph : MonoBehaviour
 
     private void setBoostType()
     {
-        int newTypeIndex = Random.Range(0, 7);
+        int newTypeIndex = Random.Range(0, 5);
         switch (newTypeIndex)
         {
-            
+
             default:
-            case 0: boostType = "heal"; spriteRenderer.sprite = sprites[0]; spriteRenderer.color = Color.green;
+            case 0: boostType = "heal"; spriteRenderer.sprite = orbSprite; spriteRenderer.color = Color.green;
             break;
-            case 1: boostType = "infinyAmmo"; spriteRenderer.sprite = sprites[1]; spriteRenderer.color = Color.yellow;
+            case 1: boostType = "infinyAmmo"; spriteRenderer.sprite = orbSprite; spriteRenderer.color = new Color(0.4f, 0.0f, 0.6f, 1.0f);
             break;
-            case 2: boostType = "refillAmmo"; spriteRenderer.sprite = sprites[2]; spriteRenderer.color = Color.magenta;
+            case 2: boostType = "weaponUpgrade"; spriteRenderer.sprite = orbSprite; spriteRenderer.color = new Color(0.8f, 0.3333f, 0.0f, 1.0f);
             break;
-            case 3: boostType = "weaponUpgrade"; spriteRenderer.sprite = sprites[3]; spriteRenderer.color = Color.grey;
-            break;
-            case 4: boostType = "godmode"; spriteRenderer.sprite = sprites[4]; spriteRenderer.color = Color.white;
+            case 3: boostType = "godmode"; spriteRenderer.sprite = orbSprite;
             break;     
-            case 5: boostType = "increaseMaxAmmo"; spriteRenderer.sprite = sprites[5]; spriteRenderer.color = Color.cyan;
-            break; 
-            case 6: boostType = "increaseAmmoRefill"; spriteRenderer.sprite = sprites[6]; spriteRenderer.color = Color.black;
-            break;                                                  
+            case 4: boostType = "increaseMaxAmmo"; spriteRenderer.sprite = orbSprite; spriteRenderer.color = new Color(1.0f, 0.7137f, 0.7569f, 1.0f);
+            break;                                              
         }
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -50,23 +46,18 @@ public class boostPolymorph : MonoBehaviour
     {
         switch (boostType)
         {
-            
-            default: c.heal(15f);
+            default: c.heal(30f);
             break;
-            case "heal": c.heal(15f);
+            case "heal": c.heal(10f);
             break;
             case "infinyAmmo": c.toggleInfinyAmmo();
-            break;
-            case "refillAmmo": c.refillAmmo();
             break;
             case "weaponUpgrade": c.weaponUpgrade();
             break;            
             case "godmode": c.togggleGodMode();
             break;   
             case "increaseMaxAmmo": c.increaseMaxAmmo();
-            break;   
-            case "increaseAmmoRefill": c.increaseAmmoRefill();
-            break;                                                  
+            break;                                                 
         }
 
         Destroy(this.gameObject);

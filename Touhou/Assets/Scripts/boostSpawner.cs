@@ -19,7 +19,7 @@ public class boostSpawner : MonoBehaviour
         while (true)
         {
             spawnBoost();
-            yield return new WaitForSeconds(Random.Range(3f, 35f));
+            yield return new WaitForSeconds(Random.Range(5f, 10f));
         }
     }
 

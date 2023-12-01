@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6848084663972022086}
   - component: {fileID: 8246493584270230986}
   - component: {fileID: 2393658911503946230}
-  - component: {fileID: 6593057846483200266}
   m_Layer: 10
   m_Name: P_ennemiesSpawner
   m_TagString: Untagged
@@ -149,19 +148,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6593057846483200266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8057322609521344126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabf0db02bad6824b8b5f9f9990e9ee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 759196366577026296, guid: 5b1f9056b3c340743b0d20808de68f2d, type: 3}
-  poolSize: 500
-  moveSpeed: 25
-  rb: {fileID: 8246493584270230986}

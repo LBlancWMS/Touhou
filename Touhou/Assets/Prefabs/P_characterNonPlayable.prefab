@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 2287880218244454767}
   - component: {fileID: 7227691103299572086}
   - component: {fileID: 9197736390489723026}
-  - component: {fileID: 6110707232018548796}
+  - component: {fileID: 2412487824438225473}
   m_Layer: 8
   m_Name: P_characterNonPlayable
   m_TagString: player
@@ -174,7 +174,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -215,7 +215,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -245,7 +245,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &6110707232018548796
+--- !u!114 &2412487824438225473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,7 +254,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7555101265789147705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35d53ae05fcf3b4d877d359db851d69, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ec8293432ceb0c4eb0ec3afb92d5e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  boidTag: player
+  separationRadius: 2
+  alignRadius: 5
+  cohesionRadius: 5
+  separationWeight: 1
+  alignWeight: 1
+  cohesionWeight: 1
+  speed: 5
+  rotationSpeed: 5

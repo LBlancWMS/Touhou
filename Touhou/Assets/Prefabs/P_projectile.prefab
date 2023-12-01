@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8337637529836005161}
   - component: {fileID: 813002735866978039}
   - component: {fileID: 1211944367473252873}
-  - component: {fileID: 5064911882944540801}
   m_Layer: 7
   m_Name: P_projectile
   m_TagString: boidFriendly
@@ -121,22 +120,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &5064911882944540801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759196366577026296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de991d0e99be4f94c87b4a27fd48edbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 25
-  rotationSpeed: 25
-  neighborRadius: 2
-  separationWeight: 2
-  cohesionWeight: 0
-  attractionWeight: 1
-  separationDistance: 2

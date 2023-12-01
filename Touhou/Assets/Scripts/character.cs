@@ -1,22 +1,24 @@
 //using System.Numerics;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class character : MonoBehaviour
 {
     [SerializeField] private energyProjectileManager energyProjectilePrefab;
     private UI_inGame_Manager ui_InGame;
-    public float speed = 75f;
+    public float speed = 35f;
     private float currentHP;
     private float maxHP = 100;
-
-    private Vector2 directionn;
+    private bool canTakeDMG = true;
+    private bool doOnce = true;
+    private Vector2 moveDirection;
     private bool isMoving = false;
     private Vector2 shootAxis;
-    private float shootEnergyCost = 0.1f;
+    private float shootEnergyCost = 0.75f;
     private float currentShootEnergy = 0f;
     private float maxShootEnergy = 100f;
-    private float energyShootCooldown = 0.005f;
+    private float energyShootCooldown = 0.075f;
     private bool godMode = false;
     private bool infinyAmmo = false;
     private bool isShooting = false;
@@ -24,22 +26,31 @@ public class character : MonoBehaviour
     private Camera cam;
     private float screenWidth;
     private float screenHeight;
-    private float ammoRefillCooldown = 0.001f;
+    private float ammoRefillCooldown = 0.075f;
     [SerializeField] private GameObject projectileSpawnPoint1;
-   // [SerializeField] private GameObject projectileSpawnPoint2;
     private Rigidbody2D rb;
+    private Vector3 playerScreenPoint;
+    [SerializeField] private GameObject UI_endGame;
+    private SpriteRenderer playerSprite;
+    private AudioClip randomClip;
+    private AudioSource audioSource;
+    public AudioClip[] soundClips;
+    [SerializeField] private AudioClip hitClip;
+    [SerializeField] private Text debugText;
+    private bool debugGodMode = false;
 
     private float deltaTime = 0.0f;
     void Awake()
     {
         currentHP = maxHP;
         rb = GetComponent<Rigidbody2D>();
-       //currentShootEnergy = maxShootEnergy;
+        playerSprite = GetComponent<SpriteRenderer>();
         ui_InGame = GameObject.Find("UI_inGame").GetComponent<UI_inGame_Manager>();
         StartCoroutine("ammoRefill");
         cam = Camera.main;
         screenWidth = Screen.width;
         screenHeight = Screen.height;
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
 
@@ -59,21 +70,10 @@ void Update()
     deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     if (isMoving)
     {
-       // if(rb.position.x < 72f && rb.position.x > -72f && rb.position.y < 40f && rb.position.y > -40f)
-       // {
-         rb.MovePosition(rb.position + directionn * speed * Time.fixedDeltaTime);
-       // }
-       // transform.Translate(directionn * speed * Time.fixedDeltaTime);
+         rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
     }
+        playerScreenPoint = cam.WorldToScreenPoint(transform.position);
 
-
-
-  Vector3 playerScreenPoint = cam.WorldToScreenPoint(transform.position);
-
-        // if (playerScreenPoint.x < 0) 
-        //     screenLimitTeleportation(new Vector3(screenWidth, playerScreenPoint.y, playerScreenPoint.z));
-        // else if (playerScreenPoint.x > screenWidth) 
-        //     screenLimitTeleportation(new Vector3(0, playerScreenPoint.y, playerScreenPoint.z));
         if (playerScreenPoint.y < 0) 
             screenLimitTeleportation(new Vector3(playerScreenPoint.x, screenHeight, playerScreenPoint.z));
         else if (playerScreenPoint.y > screenHeight) 
@@ -86,8 +86,8 @@ void Update()
     }
 
 public void startMove(Vector2 axis)
-{
-    directionn = axis.normalized;
+{   
+    moveDirection = axis.normalized;
     isMoving = true;
 }
 
@@ -96,23 +96,51 @@ public void stopMove()
     isMoving = false;
 }
 
-    void OnParticleCollision()
+    void OnParticleCollision(GameObject other)
     {
-            takeDMG(1);
+        if(debugGodMode == false)
+        {
+            takeDMG(10);
+        }
+
+    }
+
+    private void toogleCanTakeDMG()
+    {
+        canTakeDMG = true;
+        playerSprite.color = Color.white;
+    }
+
+    public void godModDEBUG()
+    {
+        debugGodMode = !debugGodMode;
+        debugText.enabled = debugGodMode;
     }
 
     private void takeDMG(int damageAmout)
     {
         if(godMode == false)
-        {
+        {  
         currentHP -= damageAmout;
+        audioSource.clip = hitClip;
+        audioSource.Play();
+        ui_InGame.setHealthValue(currentHP);
+        if(canTakeDMG == true)
+        {
+            canTakeDMG = false;
+            playerSprite.color = Color.red;
+            Invoke("toogleCanTakeDMG", 0.15f);
+        }
+
         if(currentHP <= 0)
         {
-            Debug.Log("joueur mort");
-        }
-        else
-        {
-            ui_InGame.setHealthValue(currentHP);
+            if(doOnce)
+            {
+                doOnce = false;
+                GameObject ui_dead = Instantiate(UI_endGame);
+                ui_dead.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().color = new Color(1f,0f,0f, 0.1f);
+                Time.timeScale = 0f;
+            }
         }
         }
     }
@@ -142,19 +170,16 @@ public void stopMove()
 
     private void shoot()
     {
-        StopCoroutine("ammoRefill");
-        
+        playRandomShootSound();
         if(infinyAmmo == false)
         {
+        StopCoroutine("ammoRefill");
         currentShootEnergy -= shootEnergyCost;
         }
 
         ui_InGame.setEnergyValue(currentShootEnergy);
         energyProjectileManager energyProjectile = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint1.transform.position.x, projectileSpawnPoint1.transform.position.y), transform.rotation);
         energyProjectile.onSpawn(shootAxis);
-
-       // energyProjectileManager energyProjectile2 = Instantiate(energyProjectilePrefab, new Vector2(projectileSpawnPoint2.transform.position.x, projectileSpawnPoint2.transform.position.y), transform.rotation);
-       // energyProjectile2.onSpawn(shootAxis);
     }
 
 
@@ -167,7 +192,7 @@ public void stopMove()
         }
     }
 
-    IEnumerator ammoRefill()
+       IEnumerator ammoRefill()
     {
         while (currentShootEnergy < maxShootEnergy)
         {
@@ -201,6 +226,7 @@ public void stopMove()
     public void weaponUpgrade()
     {
         weaponLevel ++;
+        transform.localScale /= 0.85f;
         energyShootCooldown *= 0.5f;
         ui_InGame.setWeaponLevel(weaponLevel);
     }
@@ -209,16 +235,18 @@ public void stopMove()
     {
         if(maxShootEnergy < 300)
         {
+        increaseAmmoRefill();
         maxShootEnergy *= 1.25f; 
         ui_InGame.setEnergyMax(maxShootEnergy);  
         }
-        else
-        {
-            Debug.Log("energymax max");
-        }
     }
 
-    
+    private void playRandomShootSound()
+    {
+            randomClip = soundClips[Random.Range(0, soundClips.Length)];
+            audioSource.clip = randomClip;
+            audioSource.Play();
+    }
 
     public void toggleInfinyAmmo()
     {
@@ -230,7 +258,7 @@ public void stopMove()
     IEnumerator infinyAmmoCoroutine()
     {
         if (0 == 0)
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
         infinyAmmo = false;
         ui_InGame.setEnergyColor(false);
         StopCoroutine("infinyAmmoCoroutine");
@@ -246,11 +274,12 @@ public void stopMove()
     IEnumerator godModeCoroutine()
     {
         if (0 == 0)
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(8.0f);
         godMode = false;
         ui_InGame.setHealthColor(false);
         StopCoroutine("godModeCoroutine");
     }
+
 
 
 
